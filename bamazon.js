@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var clitable = require("cli-table");
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -34,8 +35,10 @@ var findProduct = function(item, quantity) {
             console.log(`Sorry, we don't have that ${quantity} of ${item}`);
         } else {
             var remaining = results[0].stock_quantity - quantity;
+
             updateInventory(item, remaining);
             printTotal(item, quantity, results[0].price);
+            trackSales(item, quantity, results[0].price);
         }
         // console.log(results[0].stock_quantity);
         connection.end();
@@ -55,6 +58,18 @@ var updateInventory = function(item, quantity) {
     
     });
 };
+
+var trackSales = function(item, quantity, price) {
+    connection.query({
+        sql: 'UPDATE products SET ? WHERE ?',
+        values: [
+            {product_sales: quantity * price},
+            {product_name: item}
+        ]
+    }, function(error, results, fields) {
+        if (error) throw error;
+    });
+}
 
 var printTotal = function(item, quantity, price) {
     var total = quantity * price;
