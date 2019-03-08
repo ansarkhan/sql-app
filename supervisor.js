@@ -1,6 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-var clitable = require("cli-table");
+var clitable3 = require("cli-table3");
 
 var connection = mysql.createConnection({
     host: "localhost",

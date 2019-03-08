@@ -1,6 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-var clitable = require("cli-table");
+var table = require("cli-table3");
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -95,17 +95,3 @@ var openStore = function() {
 }
 
 openStore();
-
-var query = connection.query(
-    "INSERT INTO products SET ?",
-    {
-      flavor: "Rocky Road",
-      price: 3.0,
-      quantity: 50
-    },
-    function(err, res) {
-      console.log(res.affectedRows + " product inserted!\n");
-      // Call updateProduct AFTER the INSERT completes
-      updateProduct();
-    }
-  );

@@ -1,6 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-var clitable = require("cli-table");
+var Table = require("cli-table3");
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -10,14 +10,30 @@ var connection = mysql.createConnection({
     database: "bamazon"
 });
 
+// var viewProducts = function() {
+//     console.log("Printing all products.... \n");
+//     connection.query("SELECT * FROM products", function(err,res) {
+//         if (err) throw err;
+//         console.log(res);
+//         connection.end();
+//     });
+// };
+
 var viewProducts = function() {
     console.log("Printing all products.... \n");
     connection.query("SELECT * FROM products", function(err,res) {
         if (err) throw err;
-        console.log(res);
+        var table = new Table();
+        
         connection.end();
     });
 };
+
+// for (var key in p) {
+//     if (p.hasOwnProperty(key)) {
+//         console.log(key + " -> " + p[key]);
+//     }
+// }
 
 var lowInventory = function() {
     console.log("Printing low inventory products.... \n");
