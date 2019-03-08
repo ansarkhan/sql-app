@@ -1,7 +1,7 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var Table = require("cli-table3");
-var supervisor = require("./supervisor")
+
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -74,13 +74,8 @@ var lowInventory = function() {
 };
 
 var addInventory = function() {
-    console.log("Your products include...");
     connection.query("SELECT * FROM products", function(err,res) {
         if (err) throw err;
-
-        res.forEach(element => {
-            console.log(element.product_name);
-        });
 
         // making skeleton for table
         var prodTable = new Table({

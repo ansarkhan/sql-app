@@ -6,6 +6,8 @@ SQL App is a command line application that allows users to take three roles at a
 
 Based on the role you want to play, run the appropriate file in your command line using node.
 
+Demo video in root folder, file is called 'demo.mov'.
+
 Ex. node manager.js
 
 ## Built With
