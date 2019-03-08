@@ -1,6 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-var clitable3 = require("cli-table3");
+var Table = require("cli-table3");
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -11,23 +11,36 @@ var connection = mysql.createConnection({
 });
 
 var salesByDep = function() {
-    /*
-    display the following:
-    - department_id
-    - department_name
-    - over_head_costs (made up #)
-    - product sales;'
-    - total profit - overheadcosts minus sales
-    */
    connection.query({
        sql: `
        SELECT departments.id, departments.department_name, departments.overhead_costs, SUM(products.product_sales) AS Sales, SUM(products.product_sales) - departments.overhead_costs AS Profit
        FROM departments LEFT JOIN products ON (departments.department_name = products.department_name)
        GROUP BY departments.id
        `
-   }, function(error, results, fields) {
+   }, function(error, res, fields) {
        if (error) throw error;
-       console.log(results);
+
+    //    console.log(results);
+
+
+    var prodTable = new Table({
+        head: ['ID', 'Department Name', 'Overhead Costs', 'Sales', 'Profit']
+    });
+
+        // pushing values of each object into an array
+        var tempArr = [];
+        res.forEach(ele => {
+            tempArr.push(Object.values(ele));
+        });
+
+        // pushing array to form individual rows
+        tempArr.forEach(ele => {
+            prodTable.push(ele);
+        });
+
+        // printing table
+        console.log(prodTable.toString());
+
        connection.end();
    });
 
@@ -54,6 +67,7 @@ var createDep = function() {
             ]
         }, function(error, results, fields) {
             if (error) throw error;
+            console.log(`${answer.department} added!`);
             connection.end();
         })
         
