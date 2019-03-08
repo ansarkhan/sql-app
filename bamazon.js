@@ -10,10 +10,6 @@ var connection = mysql.createConnection({
     database: "bamazon"
 });
 
-// connection.connect(function(err) {
-//     if (err) throw err;
-//     // console.log(`connected as ID ${connection.threadId} \n`);
-// });
 
 var readAllProducts = function() {
     console.log("Printing all products.... \n");
@@ -40,7 +36,7 @@ var findProduct = function(item, quantity) {
             printTotal(item, quantity, results[0].price);
             trackSales(item, quantity, results[0].price);
         }
-        // console.log(results[0].stock_quantity);
+
         connection.end();
       });
 };

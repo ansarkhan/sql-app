@@ -19,6 +19,17 @@ var salesByDep = function() {
     - product sales;'
     - total profit - overheadcosts minus sales
     */
+   connection.query({
+       sql: `
+       SELECT departments.id, departments.department_name, departments.overhead_costs, SUM(products.product_sales) AS Sales, SUM(products.product_sales) - departments.overhead_costs AS Profit
+       FROM departments LEFT JOIN products ON (departments.department_name = products.department_name)
+       GROUP BY departments.id
+       `
+   }, function(error, results, fields) {
+       if (error) throw error;
+       console.log(results);
+       connection.end();
+   });
 
 };
 
