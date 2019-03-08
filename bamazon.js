@@ -100,3 +100,16 @@ var openStore = function() {
 
 openStore();
 
+var query = connection.query(
+    "INSERT INTO products SET ?",
+    {
+      flavor: "Rocky Road",
+      price: 3.0,
+      quantity: 50
+    },
+    function(err, res) {
+      console.log(res.affectedRows + " product inserted!\n");
+      // Call updateProduct AFTER the INSERT completes
+      updateProduct();
+    }
+  );

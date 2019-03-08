@@ -2,6 +2,14 @@ var mysql = require("mysql");
 var inquirer = require("inquirer");
 var clitable = require("cli-table");
 
+var connection = mysql.createConnection({
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: "password",
+    database: "bamazon"
+});
+
 var salesByDep = function() {
     /*
     display the following:
@@ -15,8 +23,33 @@ var salesByDep = function() {
 };
 
 var createDep = function() {
-    // do something
+    inquirer.prompt([
+        {
+            name: "department",
+            message: "What is the department name?"
+        },
+        {
+            name: "cost",
+            message: "What are the overhead costs?"
+        }
+    ]).then(function(answer) {
+
+
+        connection.query({
+            sql: "INSERT INTO departments SET ?",
+            values: [
+                {department_name: answer.department},
+                {overhead_costs: answer.cost}
+            ]
+        }, function(error, results, fields) {
+            if (error) throw error;
+            connection.end();
+        })
+        
+    });
+
 };
+
 
 var supervisorMenu = function() {
     inquirer.prompt({
@@ -40,3 +73,5 @@ var supervisorMenu = function() {
           }
     });
 };
+
+supervisorMenu();
