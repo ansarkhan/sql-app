@@ -10,14 +10,6 @@ var connection = mysql.createConnection({
     database: "bamazon"
 });
 
-// var viewProducts = function() {
-//     console.log("Printing all products.... \n");
-//     connection.query("SELECT * FROM products", function(err,res) {
-//         if (err) throw err;
-//         console.log(res);
-//         connection.end();
-//     });
-// };
 
 var rowArr = [];
 var tableArr = [];
@@ -28,39 +20,54 @@ var viewProducts = function() {
         if (err) throw err;
 
 
+        // making skeleton for table
         var prodTable = new Table({
             head: ['ID', 'Name', 'Department', 'Price', 'Stock', 'Sales']
         });
 
+        // pushing values of each object into an array
         var tempArr = [];
         res.forEach(ele => {
             tempArr.push(Object.values(ele));
         });
 
+        // pushing array to form individual rows
         tempArr.forEach(ele => {
             prodTable.push(ele);
         });
 
-        // tableArr.push(Object.values(res[0]));
-        // prodTable.push(tableArr);
-
+        // printing table
         console.log(prodTable.toString());
 
         connection.end();
     });
 };
 
-// for (var key in p) {
-//     if (p.hasOwnProperty(key)) {
-//         console.log(key + " -> " + p[key]);
-//     }
-// }
+
 
 var lowInventory = function() {
     console.log("Printing low inventory products.... \n");
     connection.query("SELECT * FROM products WHERE stock_quantity < 5", function(err,res) {
         if (err) throw err;
-        console.log(res);
+
+        var prodTable = new Table({
+            head: ['ID', 'Name', 'Department', 'Price', 'Stock', 'Sales']
+        });
+
+        // pushing values of each object into an array
+        var tempArr = [];
+        res.forEach(ele => {
+            tempArr.push(Object.values(ele));
+        });
+
+        // pushing array to form individual rows
+        tempArr.forEach(ele => {
+            prodTable.push(ele);
+        });
+
+        // printing table
+        console.log(prodTable.toString());
+
         connection.end();
     });
 };
@@ -69,9 +76,31 @@ var addInventory = function() {
     console.log("Your products include...");
     connection.query("SELECT * FROM products", function(err,res) {
         if (err) throw err;
+
         res.forEach(element => {
             console.log(element.product_name);
         });
+
+        // making skeleton for table
+        var prodTable = new Table({
+            head: ['ID', 'Name', 'Department', 'Price', 'Stock', 'Sales']
+        });
+
+        // pushing values of each object into an array
+        var tempArr = [];
+        res.forEach(ele => {
+            tempArr.push(Object.values(ele));
+        });
+
+        // pushing array to form individual rows
+        tempArr.forEach(ele => {
+            prodTable.push(ele);
+        });
+
+        // printing table
+        console.log(prodTable.toString());
+
+        
     });
 
     inquirer.prompt([
@@ -177,33 +206,4 @@ var managerMenu = function() {
 }
 
 managerMenu();
-
-// var table = new Table({
-//     head: ['TH 1 label', 'TH 2 label']
-// });
- 
-// // table is an Array, so you can `push`, `unshift`, `splice` and friends
-// table.push(
-//     ['First value', 'Second value']
-//   , ['First value', 'Second value']
-// );
- 
-// console.log(table.toString());
-
-
-// var prodTable = new Table({
-//     head: ['ID', 'Name', 'Department', 'Price', 'Stock', 'Sales']
-// });
-
-
-// var testA = [
-//     [1, 2, 3, 4 ,5, 6],
-//     [1, 2, 3, 4 ,5, 6]
-// ]
-
-// testA.forEach(ele => {
-//     prodTable.push(ele);
-// });
-
-// console.log(prodTable.toString());
 
