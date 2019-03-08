@@ -27,22 +27,26 @@ var viewProducts = function() {
     connection.query("SELECT * FROM products", function(err,res) {
         if (err) throw err;
 
-        // res.forEach(ele => {
-        //     rowArr.push(ele.id);
-        //     rowArr.push(ele.product_name);
-        // });
 
-        // // printing fancy table
-        // var prodTable = new Table({
-        //     head: ['ID', 'Name', 'Department', 'Price', 'Stock', 'Sales']
-        // });
+        var prodTable = new Table({
+            head: ['ID', 'Name', 'Department', 'Price', 'Stock', 'Sales']
+        });
 
+        var tempArr = [];
+        res.forEach(ele => {
+            tempArr.push(Object.values(ele));
+        });
+
+        tempArr.forEach(ele => {
+            prodTable.push(ele);
+        });
+
+        // tableArr.push(Object.values(res[0]));
         // prodTable.push(tableArr);
 
-        // console.log(prodTable.toString());
-        // console.log(tableArr);
+        console.log(prodTable.toString());
 
-        // connection.end();
+        connection.end();
     });
 };
 
@@ -185,4 +189,21 @@ managerMenu();
 // );
  
 // console.log(table.toString());
+
+
+// var prodTable = new Table({
+//     head: ['ID', 'Name', 'Department', 'Price', 'Stock', 'Sales']
+// });
+
+
+// var testA = [
+//     [1, 2, 3, 4 ,5, 6],
+//     [1, 2, 3, 4 ,5, 6]
+// ]
+
+// testA.forEach(ele => {
+//     prodTable.push(ele);
+// });
+
+// console.log(prodTable.toString());
 
