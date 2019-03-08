@@ -1,6 +1,7 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var Table = require("cli-table3");
+var supervisor = require("./supervisor")
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -206,4 +207,5 @@ var managerMenu = function() {
 }
 
 managerMenu();
+
 
