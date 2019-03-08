@@ -19,13 +19,30 @@ var connection = mysql.createConnection({
 //     });
 // };
 
+var rowArr = [];
+var tableArr = [];
+
 var viewProducts = function() {
     console.log("Printing all products.... \n");
     connection.query("SELECT * FROM products", function(err,res) {
         if (err) throw err;
-        var table = new Table();
-        
-        connection.end();
+
+        // res.forEach(ele => {
+        //     rowArr.push(ele.id);
+        //     rowArr.push(ele.product_name);
+        // });
+
+        // // printing fancy table
+        // var prodTable = new Table({
+        //     head: ['ID', 'Name', 'Department', 'Price', 'Stock', 'Sales']
+        // });
+
+        // prodTable.push(tableArr);
+
+        // console.log(prodTable.toString());
+        // console.log(tableArr);
+
+        // connection.end();
     });
 };
 
@@ -156,3 +173,16 @@ var managerMenu = function() {
 }
 
 managerMenu();
+
+// var table = new Table({
+//     head: ['TH 1 label', 'TH 2 label']
+// });
+ 
+// // table is an Array, so you can `push`, `unshift`, `splice` and friends
+// table.push(
+//     ['First value', 'Second value']
+//   , ['First value', 'Second value']
+// );
+ 
+// console.log(table.toString());
+
